@@ -27,6 +27,7 @@ filetype plugin indent on
 autocmd FileType c setlocal et sta sw=4 sts=4
 autocmd FileType sh setlocal et sta sw=4 sts=4
 autocmd FileType lua setlocal et sta sw=4 sts=4
+autocmd FileType html setlocal et sta sw=4 sts=4
 autocmd FileType python setlocal et sta sw=4 sts=4
 
 "光标回到上次退出的位置
@@ -44,3 +45,13 @@ map \c i{<Esc>ea}<Esc>
 "Vim 通常会对长行自动回绕，以便你可以看见所有的文字。但有时最好还是能让文字在一
 "行中显示完。这样，你需要左右移动才能看到一整行。以下命令可以关闭行的回绕
 "set nowrap
+
+function! VCpy() range
+  execute ":'<,'> s/\\v^(.)/#\\1/g"
+endfunction
+map <C-I> :call VCpy()<CR>
+
+function! VUCpy() range
+  execute ":'<,'> s/\\v^( *)(#*)/\\1/g"
+endfunction
+map <C-O> :call VUCpy()<CR>
