@@ -1,6 +1,7 @@
-git config --global user.name Slasher
+git config --global user.name slasher
 git config --global user.email mcq.sejust@gmail.com
 git config --global merge.tool vimdiff
+git config --global diff.algorithm histogram
 git config --global color.ui true
 
 git config --global alias.st status
@@ -12,4 +13,5 @@ git config --global alias.empty 'commit --allow-empty'
 git config --global alias.remshow 'remote show origin'
 git config --global alias.list 'log --color --graph --decorate -M --pretty=oneline --abbrev-commit -M'
 git config --global alias.history 'log --color --graph --decorate -M --pretty=oneline --abbrev-commit -M --all'
+git config --global alias.myci 'log --author=slasher --color --graph --decorate -M --pretty=oneline --abbrev-commit -M'
 
