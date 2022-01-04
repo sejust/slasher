@@ -8,11 +8,12 @@ git config --global alias.st status
 git config --global alias.br branch
 git config --global alias.co checkout
 git config --global alias.ci commit
+git config --global alias.ll 'log -p'
 git config --global alias.fp 'fetch -p'
 git config --global alias.reb2 'rebase -i HEAD~2'
 git config --global alias.empty 'commit --allow-empty'
 git config --global alias.remshow 'remote show origin'
-git config --global alias.list 'log --color --graph --decorate -M --pretty=oneline --abbrev-commit -M'
-git config --global alias.history 'log --color --graph --decorate -M --pretty=oneline --abbrev-commit -M --all'
-git config --global alias.myci 'log --author=slasher --color --graph --decorate -M --pretty=oneline --abbrev-commit -M'
-
+git config --global alias.list "log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %C(normal)%s%C(reset) %C(dim white)%an%C(reset) %C(dim blue)(%ar)%C(reset)' -M"
+git config --global alias.history "log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %C(normal)%s%C(reset) %C(dim white)%an%C(reset) %C(dim blue)(%ar)%C(reset)' --all"
+git config --global alias.simple "log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %C(normal)%s%C(reset) %C(dim white)%an%C(reset) %C(dim blue)(%ar)%C(reset)' --simplify-by-decoration --all"
+git config --global alias.myci "log --author=slasher --format=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %C(normal)%s%C(reset) %C(dim white)ʃ %an%C(reset) %C(dim blue)(%ar)%C(reset)' --graph --decorate --all"

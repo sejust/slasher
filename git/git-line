@@ -1,0 +1,9 @@
+#!/bin/sh
+
+_gline_() {
+    local q='"'
+    echo "Author: `git config user.name`"
+    echo "git log --author=${q}`git config user.name`${q} --pretty=tformat: --numstat | awk '{ add += \$1; subs += \$2; loc += \$1 - \$2 } END { printf ${q}added lines: %s, removed lines: %s, total lines: %s\n${q}, add, subs, loc }' -" | sh
+}
+
+alias gline=_gline_
