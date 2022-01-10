@@ -1,17 +1,13 @@
-#!/bin/sh
 
-LANG=en_US.UTF-8
 HISTFILESIZE=100000
 export HISTTIMEFORMAT='%F %T '
-export PATH=$PATH:/root/bin:/usr/local/go/bin:/root/lib/go/bin:/usr/local/mongodb5/bin
+export PATH=$PATH:/root/bin:/usr/local/go/bin:/root/lib/go/bin
 
 source /root/.completion/git-completion.bash
 complete -C /root/lib/go/bin/gocomplete go
 
 export GIT_SSL_NO_VERIFY=1
 export GIT_CURL_VERBOSE=1
-
-export TERM="xterm-color"
 
 alias ll='ls -lF'
 alias la='ls -lFa'
@@ -26,13 +22,6 @@ alias uuu='cd ../../.. '
 
 # rename
 alias python='/usr/bin/python2.7'
-
-_gline_() {
-    local q='"'
-    echo "Author: `git config user.name`"
-    echo "git log --author=${q}`git config user.name`${q} --pretty=tformat: --numstat | awk '{ add += \$1; subs += \$2; loc += \$1 - \$2 } END { printf ${q}added lines: %s, removed lines: %s, total lines: %s\n${q}, add, subs, loc }' -" | sh
-}
-alias gline=_gline_
 
 # cd
 alias cddownload='cd /home/slasher/Downloads'
@@ -61,3 +50,16 @@ export GOPATH=/root/lib/go
 export GOFLAGS=-mod=mod
 export GO111MODULE=on
 export GOPROXY=https://goproxy.io
+
+# rust
+source $HOME/.cargo/env
+export CARGO_NET_GIT_FETCH_WITH_CLI=true
+export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
+
+# fg() {
+#     if [[ $# -eq 1 && $1 = - ]]; then
+#         builtin fg %-
+#     else
+#         builtin fg %"$@"
+#     fi
+# }
