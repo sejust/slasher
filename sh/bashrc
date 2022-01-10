@@ -1,0 +1,65 @@
+
+[ "x$__BASHRC__" == "x" ] && { __BASHRC__=1; } || { return; }
+
+. ~/.slasher
+
+if [ -z $LANG ]; then
+    export LANG=en_US.utf-8
+    export LC_ALL=en_US.utf-8
+fi
+
+d()
+{
+    return 0
+    echo $(gdate +"%s.%N") "$@"
+}
+
+parse_git_branch()
+{
+   git branch --no-color 2>/dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/(\1)/'
+}
+
+ps_pwd()
+{
+    local LightBlue="$(tput bold ; tput setaf 4)"
+    local NC="$(tput sgr0)" # No Color
+    local height=$(tput lines)
+
+    local cwd="${PWD#$HOME}"
+    if test ".$cwd" != ".$PWD"; then
+        cwd="~$cwd"
+    fi
+    test "$height" -gt 10 \
+        && echo "
+    $LightBlue$cwd$NC" \
+        || echo " $LightBlue$cwd$NC"
+}
+
+init_prompt()
+{
+    Red="$(tput setaf 1)"
+    Green="$(tput setaf 2)"
+    LightGreen="$(tput bold ; tput setaf 2)"
+    Brown="$(tput setaf 3)"
+    Yellow="$(tput bold ; tput setaf 3)"
+    LightBlue="$(tput bold ; tput setaf 4)"
+    NC="$(tput sgr0)" # No Color
+    d end color
+
+    PROMPT_COMMAND='echo -ne "\033]0;${mainip}\007"'
+
+    local ps="\[$Green\]\u\[$NC\]@\[$Brown\]\h\[$NC\]"
+    ps=$ps"\[$Yellow\]${eth0_ip}\[$NC\]"
+    # ps=$ps" $Red[\d \t]$NC"
+    # ps=$ps".\j"
+    ps=$ps" \[$LightGreen\]\$(parse_git_branch 2>/dev/null || git branch --no-color 2>/dev/null)\[$NC\] \[$Red\]\t\[$NC\] \j\$ "
+    ps=$ps"\$(ps_pwd 2>/dev/null || { echo; pwd; })\n"
+    export PS1="$ps \[$LightGreen\] ʃf \[$NC\]"
+    #export PS1="$ps $LightGreen --> $NC"
+    d end ps1
+}
+
+
+export GREP_COLORS="ms=01;33:mc=01;31:sl=0;33:cx=:fn=35:ln=32:bn=32:se=36"
+
+init_prompt
