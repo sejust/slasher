@@ -1,3 +1,4 @@
+. ~/.bashorigin
 
 [ "x$__BASHRC__" == "x" ] && { __BASHRC__=1; } || { return; }
 
@@ -63,3 +64,11 @@ init_prompt()
 export GREP_COLORS="ms=01;33:mc=01;31:sl=0;33:cx=:fn=35:ln=32:bn=32:se=36"
 
 init_prompt
+. "$HOME/.cargo/env"
+
+# fnm
+FNM_PATH="/root/.local/share/fnm"
+if [ -d "$FNM_PATH" ]; then
+  export PATH="$FNM_PATH:$PATH"
+  eval "`fnm env`"
+fi
