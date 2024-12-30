@@ -1,0 +1,29 @@
+[user]
+	name = slasher
+	email = mcq.sejust@gmail.com
+[merge]
+	tool = vimdiff
+[diff]
+	algorithm = histogram
+[color]
+	ui = true
+[alias]
+	st = status
+	br = branch
+	co = checkout
+	ci = commit
+	ll = log -p
+	fp = fetch -p
+	rp = remote update -p
+	reb2 = rebase -i HEAD~2
+	empty = commit --allow-empty
+	list = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %C(normal)%s%C(reset) %C(dim white)%an%C(reset) %C(dim blue)(%ar)%C(reset)' -M
+	history = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %C(normal)%s%C(reset) %C(dim white)%an%C(reset) %C(dim blue)(%ar)%C(reset)' --all
+	simple = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %C(normal)%s%C(reset) %C(dim white)%an%C(reset) %C(dim blue)(%ar)%C(reset)' --simplify-by-decoration --all
+	myci = log --author=slasher --format=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %C(normal)%s%C(reset) %C(dim white)ʃ %an%C(reset) %C(dim blue)(%ar)%C(reset)' --graph --decorate --all
+	tp = fetch -p origin 'refs/tags/*:refs/tags/*'
+[core]
+	editor = vim
+[http]
+	followRedirects = true
+	sslVerify = false
