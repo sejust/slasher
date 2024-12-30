@@ -1,0 +1,19 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[credential]
+	helper = store
+[user]
+	name = slasher
+	email = shenjie1@oppo.com
+[alias]
+	myci = log --author=slasher --since=4.weeks --format=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %C(normal)%s%C(reset) %C(dim white)ʃ %an%C(reset) %C(dim blue)(%ar)%C(reset)' --graph --decorate --all
+	fp = fetch -p oppo
+	ci = commit --signoff
+	rx = reset --hard
+[commit]
+	template = /root/.completion/commit.template.ebs
+[diff]
+	renameLimit = 10000
