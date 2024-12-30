@@ -9,9 +9,10 @@ source /root/.completion/git-completion.bash
 complete -C /root/lib/go/bin/gocomplete go
 
 export GIT_SSL_NO_VERIFY=1
-export GIT_CURL_VERBOSE=1
+# export GIT_CURL_VERBOSE=1
 
-export TERM="xterm-color"
+# export TERM="xterm-color"
+export TERM="xterm-256color"
 
 alias ll='ls -lF'
 alias la='ls -lFa'
@@ -30,13 +31,23 @@ alias python='/usr/bin/python2.7'
 _gline_() {
     local q='"'
     echo "Author: `git config user.name`"
-    echo "git log --author=${q}`git config user.name`${q} --pretty=tformat: --numstat | awk '{ add += \$1; subs += \$2; loc += \$1 - \$2 } END { printf ${q}added lines: %s, removed lines: %s, total lines: %s\n${q}, add, subs, loc }' -" | sh
+    echo "git log --author=${q}`git config user.name`${q} --ignore-blank-lines --pretty=tformat: --numstat | egrep -v "vendor/" | awk '{ add += \$1; subs += \$2; loc += \$1 - \$2 } END { printf ${q}added lines: %s, removed lines: %s, total lines: %s\n${q}, add, subs, loc }' -" | sh
 }
 alias gline=_gline_
+
+_gline_all_() {
+    git log --format='%aN' | sort -u | while read name; do echo -en "$name\t"; git log --author="$name" --pretty=tformat: --numstat | egrep -v "(deps/|libs/|external/|vendor/|docs/|tools/)" | awk '{ add += $1; subs += $2; loc += $1 + $2 } END { printf "added lines: %s, removed lines: %s, total lines: %s\n", add, subs, loc }' -; done
+}
+alias gline_all=_gline_all_
 
 # cd
 alias cddownload='cd /home/slasher/Downloads'
 alias cdgithub='cd /home/slasher/Documents/github'
+alias cdoppo='cd /home/slasher/Documents/oppo'
+alias cdcubefs='cd /home/slasher/Documents/oppo/cubefs'
+alias cdblobstore='cd /home/slasher/Documents/oppo/cubefs/blobstore'
+alias cdrpc2='cd /home/slasher/Documents/oppo/cubefs/blobstore/common/rpc2'
+alias cdsrc='cd /root/lib/go/src'
 
 # proxy list
 alias proxy='export https_proxy=http://127.0.0.1:7890 http_proxy=http://127.0.0.1:7890 all_proxy=socks5://127.0.0.1:7890'
@@ -45,24 +56,33 @@ alias unproxy='unset https_proxy http_proxy all_proxy'
 # golang
 alias gotf='go test -v -run'
 alias gota='go test -v --memprofile profile_mem.out --cpuprofile profile_cpu.out --blockprofile profile_block.out --mutexprofile profile_mutex.out -covermode=count --coverprofile profile_cover.out'
-alias gotc='go test -v -covermode=count --coverprofile profile_cover.out'
+alias gotc='go test -v -covermode=count --coverprofile /tmp/profile_cover.out'
 alias gotp='go tool pprof -http=:8080 '
+alias gott='go tool trace profile_trace.out'
 alias gotb='go test -v -bench=. -run=^$'
 alias gotbm='go test -v -bench=. -run=^$ --benchmem'
 alias gotbmc='go test -v -bench=. -run=^$ --benchmem --cpuprofile profile_cpu.out'
 alias gotbmm='go test -v -bench=. -run=^$ --benchmem --memprofile profile_mem.out'
 alias gotbmmc='go test -v -bench=. -run=^$ --benchmem --memprofile profile_mem.out --cpuprofile profile_cpu.out'
-alias gocover='go tool cover -html=profile_cover.out -o /tmp/coverage.html'
-alias goclean='rm -f profile_* *.test'
+alias gotbmmct='go test -v -bench=. -run=^$ --benchmem --memprofile profile_mem.out --cpuprofile profile_cpu.out -trace=profile_trace.out'
+alias gotbmmb='go test -v -run=^$ --benchmem --memprofile profile_mem.out --cpuprofile profile_cpu.out'
+alias gocover='go tool cover -html=/tmp/profile_cover.out -o /media/sf_Document/coverage.html'
+alias goclean='rm -f profile_* \*.test'
 
 # golang
+source /root/lib/go/env.sh
 export GOROOT=/usr/local/go
 export GOPATH=/root/lib/go
 export GOFLAGS=-mod=mod
 export GO111MODULE=on
-export GOPROXY=https://goproxy.io
+# export GOPROXY=https://goproxy.io
+export GOPROXY=https://goproxy.cn,direct
 
 # rust
 source $HOME/.cargo/env
 export CARGO_NET_GIT_FETCH_WITH_CLI=true
 export RUST_SRC_PATH=$(rustc --print sysroot)/lib/rustlib/src/rust/library
+
+# gcc
+#update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90 --slave /usr/bin/g++ g++ /usr/bin/g++-9
+#update-alternatives --config gcc
