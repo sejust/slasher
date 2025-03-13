@@ -1,0 +1,17 @@
+#!/usr/bin/expect -f
+
+trap {
+    set rows [stty rows]
+    set cols [stty columns]
+    stty rows $rows columns $cols < $spawn_out(slave,name)
+} WINCH
+
+set timeout 30
+set veri_code [ exec python3 {/root/bin/xxxgetgooglecode.py} ]
+
+spawn ssh -p22 80339648@jms.oppoer.me
+expect "password:"
+send "${password}\r"
+expect "MFA auth"
+send "${veri_code}\n"
+interact

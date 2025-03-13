@@ -50,7 +50,10 @@ alias gotbmmct='go test -v -bench=. -run=^$ --benchmem --memprofile profile_mem.
 alias gotbmmb='go test -v -run=^$ --benchmem --memprofile profile_mem.out --cpuprofile profile_cpu.out'
 alias gocover='go tool cover -html=/tmp/profile_cover.out -o /media/sf_Document/coverage.html'
 alias goclean='rm -f profile_* \*.test'
-alias goescape="go build -gcflags='-m -m' > xxx 2>&1"
+# -l: do not inline
+alias goescape="go build -gcflags='-m -m -l' > xxx 2>&1"
+alias goinline="go build -gcflags='-m -m -l=4' > xxx 2>&1"
+alias gogcoff="GOGC=off go run "
 
 # golang
 source /root/lib/go/env.sh
