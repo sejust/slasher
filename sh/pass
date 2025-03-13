@@ -1,0 +1,29 @@
+#!/bin/sh
+
+_echo="/usr/bin/echo"
+openssl="/usr/bin/openssl"
+base64="/usr/bin/base64"
+b64decode="/usr/bin/base64 -d"
+b64_nowrap='-w0'
+
+# pass="$1"
+pass=
+
+_encrypt()
+{
+    echo $pass
+    $_echo -E "$1" | $openssl des3 -k $pass 2>/dev/null | $base64 $b64_nowrap \
+        | {
+            printf "des-b64:"
+            cat
+        }
+}
+
+_decrypt()
+{
+    local content="${1#des-b64:}"
+    { $_echo -E "$content" | $b64decode | $openssl des3 -d -k "$pass" 2>/dev/null; } || exit 1
+}
+
+read -s pass
+_decrypt "des-b64:U2FsdGVkX18QnPxToD0lYS/nyT3RvNk7aN/BjvrAT9g="
