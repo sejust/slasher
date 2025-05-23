@@ -1,0 +1,36 @@
+{
+    "languageserver": {
+        "golang": {
+            "command": "gopls",
+            "args": ["-remote=auto"],
+            "rootPatterns": ["go.mod"],
+            "filetypes": ["go"]
+        },
+        "rust": {
+            "command": "rust-analyzer",
+            "filetypes": ["rust"],
+            "rootPatterns": ["Cargo.toml"]
+        }
+    },
+
+    "clangd.arguments": [
+        "--query-driver=/usr/bin/clang++",
+        "--header-insertion=never",
+        "--background-index",
+        "--clang-tidy",
+        "--completion-style=detailed",
+        "--offset-encoding=utf-16"
+    ],
+    "clangd.path": "/usr/bin/clangd",
+
+    "python.pythonPath": "python3.12",
+    "pyright.inlayHints.functionReturnTypes": true,
+    "pyright.inlayHints.variableTypes": false,
+    "pyright.inlayHints.parameterTypes": false,
+
+    "rust-analyzer.server.path": "~/.cargo/bin/rust-analyzer",
+    "rust-analyzer.server.extraEnv": { "RUSTUP_TOOLCHAIN": "stable" },
+    "rust-analyzer.inlayHints.typeHints.enable": false,
+    "rust-analyzer.inlayHints.parameterHints.enable": false,
+    "rust-analyzer.inlayHints.chainingHints.enable": false
+}
