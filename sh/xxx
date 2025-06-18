@@ -7,6 +7,37 @@ trap {
 } WINCH
 
 set timeout 30
+
+set n10000              "0.0.0.0"
+set n10000_host         "hostname-n10000"
+
+set n60000              "hostname-n60000"
+
+# 显示操作菜单
+send_user "\n- - - - - - - - - - Clusters - - - - - - - - - -\n"
+send_user " 0   : 10000 dev           ${n10000_host}               ---> ${n10000}\n"
+send_user " 6   : 60000 other         ${n60000}\n"
+send_user ".- - - - - - - - - - - - - - - - - - - - - - - -\n"
+send_user "\nSelect please: "
+
+set choice ""
+
+# 获取用户选择
+expect_user {
+    -re "^0\n$"   { set choice $n10000 }
+    -re "^6\n$"   { set choice $n60001 }
+    -re "(q|Q)"   { exit }
+    -re "^(.+)$" {
+        # send_user "Error '$expect_out(1,string)'\n"
+        set choice ""
+    }
+    timeout      { exit }
+}
+
+if {$choice ne ""} {
+    send_user "Selected: ${choice}\n"
+}
+
 set veri_code [ exec python3 {/root/bin/xxxgetgooglecode.py} ]
 
 spawn ssh -p22 80339648@jms.oppoer.me
@@ -14,4 +45,8 @@ expect "password:"
 send "${password}\r"
 expect "MFA auth"
 send "${veri_code}\n"
+expect "Opt>"
+if {$choice ne ""} {
+    send "${choice}\r\n"
+}
 interact
