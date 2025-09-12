@@ -1,19 +1,31 @@
 [core]
-	repositoryformatversion = 0
-	filemode = true
-	bare = false
-	logallrefupdates = true
+    repositoryformatversion = 0
+    filemode = true
+    bare = false
+    logallrefupdates = true
 [credential]
-	helper = store
+    helper = store
+[remote "github"]
+    url = git@github.com:cubefs/cubefs.git
+    fetch = +refs/heads/master:refs/remotes/github/master
+    fetch = +refs/heads/blobstore-develop:refs/remotes/github/blobstore-develop
+[remote "origin"]
+    url = git@github.com:sejust/cubefs.git
+    fetch = +refs/heads/*:refs/remotes/origin/*
+[remote "oppo"]
+    url = http://code.oppoer.me/oppo_cloud_storage/cubefs.git
+    fetch = +refs/heads/*:refs/remotes/oppo/*
+    fetch = ^refs/heads/new-*
+    fetch = ^refs/heads/gateway
 [user]
-	name = slasher
-	email = shenjie1@oppo.com
+    name = slasher
+    email = shenjie1@oppo.com
 [alias]
-	myci = log --author=slasher --since=4.weeks --format=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %C(normal)%s%C(reset) %C(dim white)ʃ %an%C(reset) %C(dim blue)(%ar)%C(reset)' --graph --decorate --all
-	fp = fetch -p oppo
-	ci = commit --signoff
-	rx = reset --hard
+    myci = log --author=slasher --since=4.weeks --format=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %C(normal)%s%C(reset) %C(dim white)ʃ [%an]%C(reset) %C(dim blue)(%ar)%C(reset)' --graph --decorate --all
+    fp = fetch -p --no-tags oppo
+    ci = commit --signoff
+    rx = reset --hard
 [commit]
-	template = /root/.completion/commit.template.ebs
+    template = /root/.completion/commit.template.ebs
 [diff]
-	renameLimit = 10000
+    renameLimit = 10000

@@ -3,15 +3,12 @@
         "golang": {
             "command": "gopls",
             "args": ["-remote=auto"],
-            "rootPatterns": ["go.mod"],
-            "filetypes": ["go"]
-        },
-        "rust": {
-            "command": "rust-analyzer",
-            "filetypes": ["rust"],
-            "rootPatterns": ["Cargo.toml"]
+            "filetypes": ["go"],
+            "rootPatterns": ["go.mod"]
         }
     },
+
+    "inlayHint.enable": false,
 
     "clangd.arguments": [
         "--query-driver=/usr/bin/clang++",
@@ -28,8 +25,9 @@
     "pyright.inlayHints.variableTypes": false,
     "pyright.inlayHints.parameterTypes": false,
 
+    "rust-analyzer.enable": true,
     "rust-analyzer.server.path": "~/.cargo/bin/rust-analyzer",
-    "rust-analyzer.server.extraEnv": { "RUSTUP_TOOLCHAIN": "stable" },
+    "rust-analyzer.server.extraEnv": { "RUSTUP_TOOLCHAIN": "nightly" },
     "rust-analyzer.inlayHints.typeHints.enable": false,
     "rust-analyzer.inlayHints.parameterHints.enable": false,
     "rust-analyzer.inlayHints.chainingHints.enable": false
