@@ -99,6 +99,9 @@ func walk(mode int, dir, expr, template string, dryrun bool) error {
 		newname := regexp.MustCompile(expr).ReplaceAllString(name, tmpl)
 		if name == newname {
 			fmt.Printf(format, oldname, "Skip same name")
+			if *order > 0 {
+				number++
+			}
 			continue
 		}
 
